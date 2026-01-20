@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hilfe-Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header mit externen Links */
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .header-top {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #003F7F;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .external-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 63, 127, 0.3);
+        }
+
+        .external-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 63, 127, 0.4);
+        }
+
+        .external-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Suchbereich */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #003F7F;
+            box-shadow: 0 0 0 3px rgba(0, 63, 127, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        /* Kategorie-Filter */
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background: #f3f4f6;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4b5563;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .category-btn.active {
+            background: white;
+            border-color: #003F7F;
+            color: #003F7F;
+        }
+
+        /* Hilfe-Einträge */
+        .help-items {
+            margin-top: 30px;
+        }
+
+        .help-item {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #003F7F;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .help-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .help-item h3 {
+            color: #1f2937;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .help-item-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-category {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-type-pdf {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-type-html {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-type-link {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .help-item-description {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .help-item-link {
+            color: #003F7F;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .help-item-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .no-results svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .external-links {
+                width: 100%;
+            }
+            
+            .external-link {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1>💻 KGS - Digital</h1>
+                    <p class="header-subtitle">Anleitungen und Unterstützung für IServ, WebUntis & LEB</p>
+                </div>
+            </div>
+
+            <!-- Externe Links -->
+            <div class="external-links">
+                <!-- HIER KÖNNEN SIE WEITERE LINKS HINZUFÜGEN -->
+                <a href="https://kgs-schwarmstedt.leb-server22.de/" target="_blank" class="external-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                    LEB - Noteneingabe
+                </a>
+                <a href=" https://kgs-schwarmstedt.webuntis.com/WebUntis/#/basic/login" target="_blank" class="external-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                    </svg>
+                    WebUntis - Login
+                </a>
+                
+                 <a href="https://www.kgs-schwarmstedt.de/kalender/" target="_blank" class="external-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                    </svg>
+                    KGS-Kalender
+                </a>
+               
+                <a href="http://medienzentrum-heidekreis.de/" target="_blank" class="external-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                    </svg>
+                    Medienzentrum HK
+                </a>
+                
+                
+             
+                
+                <!-- Beispiel für weiteren Link - einfach duplizieren -->
+                <!--
+                <a href="https://ihre-url.de" target="_blank" class="external-link">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Ihr Link-Text
+                </a>
+                -->
+            </div>
+
+            <!-- Suchfeld -->
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Suchen Sie nach Hilfe... (z.B. 'iserv', 'stundenplan', 'zeugnis')"
+                >
+                <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+
+            <!-- Kategorie-Filter -->
+            <div class="category-filters">
+                <button class="category-btn active" data-category="all">Alle Themen</button>
+                <button class="category-btn" data-category="IServ">IServ</button>
+                <button class="category-btn" data-category="WebUntis">WebUntis</button>
+                <button class="category-btn" data-category="LEB">LEB</button>
+                <button class="category-btn" data-category="Allgemein">Allgemein</button>
+            </div>
+        </div>
+
+        <!-- Hilfe-Einträge -->
+        <div class="help-items" id="helpItems">
+            
+            <!-- ============================================ -->
+            <!-- BEISPIEL-EINTRÄGE - PASSEN SIE DIESE AN     -->
+            <!-- ============================================ -->
+            
+            <!-- Beispiel: PDF-Anleitung -->
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="Gruppen anlegen in IServ"
+                 data-type="pdf"
+                 data-link="pdfs/Kurzanleitung - Gruppen in IServ.pdf">
+                <h3>Gruppen anlegen in IServ</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                </div>
+                <p class="help-item-description">
+                    Schritt-für-Schritt Anleitung, wie Gruppen in IServ angelegt und Schüler zugeordnet werden.
+                </p>
+                <a href="pdfs/Kurzanleitung - Gruppen in IServ.pdf" class="help-item-link" target="_blank">
+                    Anleitung öffnen →
+                </a>
+            </div>
+
+            <!-- Beispiel: HTML-Anleitung -->
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="IServ Störungen Störungsmeldung Probleme melden Meldung Defekt Tafel"
+                 data-type="html"
+                 data-link="anleitungen/webuntis-export.html">
+                <h3>Störungsmeldung in IServ verfassen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Störung</span>
+                </div>
+                <p class="help-item-description">
+                    Störungen jeglicher Art, egal ob WLAN oder Tafel, können in IServ direkt per Störungsmeldung gemeldet werden.
+                </p>
+                <a href="pdfs/Kurzanleitung - Störungsmeldungen.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+            <!-- Beispiel: Externer Link -->
+            <div class="help-item" 
+                 data-category="LEB" 
+                 data-keywords="leb zeugnis zeugnisse erstellen noten noteneingabe"
+                 data-type="link"
+                 data-link="https://leb-software.de/index.php?page=wiki">
+                <h3>LEB Dokumentation</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">LEB</span>
+                    <span class="badge badge-type-link">Externer Link</span>
+                </div>
+                <p class="help-item-description">
+                    Offizielle Support-Seite von LEB.
+                </p>
+                <a href="https://leb-software.de/index.php?page=wiki" class="help-item-link" target="_blank">
+                    Zum LEB-Wiki →
+                </a>
+            </div>
+
+  <!--          Beispiel: E-Mail Weiterleitung
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="email e-mail weiterleitung umleitung privat gmail outlook"
+                 data-type="pdf"
+                 data-link="pdfs/iserv-email-weiterleitung.pdf">
+                <h3>E-Mail Weiterleitung einrichten</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-pdf">PDF</span>
+                </div>
+                <p class="help-item-description">
+                    IServ-Mails automatisch an Ihre private E-Mail-Adresse weiterleiten.
+                </p>
+                <a href="pdfs/iserv-email-weiterleitung.pdf" class="help-item-link" target="_blank">
+                    Anleitung öffnen →
+                </a>
+            </div>
+            -->
+
+            <!-- Beispiel: Vertretungsplan 
+            <div class="help-item" 
+                 data-category="WebUntis" 
+                 data-keywords="vertretung vertretungsplan änderung stunden ausfall"
+                 data-type="html"
+                 data-link="anleitungen/webuntis-vertretung.html">
+                <h3>Vertretungsplan in WebUntis ansehen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">WebUntis</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                </div>
+                <p class="help-item-description">
+                    Wo finden Sie aktuelle Vertretungen und Stundenplanänderungen?
+                </p>
+                <a href="anleitungen/webuntis-vertretung.html" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div> -->
+
+<!-- WLAN -->
+            <div class="help-item" 
+                 data-category="Allgemein" 
+                 data-keywords="wlan wifi internet verbindung netzwerk"
+                 data-type="pdf"
+                 data-link="pdfs/wlan-einrichtung.pdf">
+                <h3>WLAN-Zugang einrichten</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">Allgemein</span>
+                  <!--  <span class="badge badge-type-pdf">PDF</span> -->
+                </div>
+                <p class="help-item-description">
+                    Verbindung zum Schul-WLAN auf verschiedenen Geräten einrichten, Anleitungen in Bearbeitung
+                </p>
+                <!-- <a href="pdfs/wlan-einrichtung.pdf" class="help-item-link" target="_blank">
+                    Anleitung öffnen →-->
+                </a>
+            </div>
+            
+            <!-- IServ - Videokonferenzen einrichten -->
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="IServ Videokonferenz VK einrichten erstellen erzeugen Tafel"
+                 data-type="html">
+                 <h3>Videokonferenzen in IServ erstellen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Videokonferenz</span>
+                </div>
+                <p class="help-item-description">
+                    Eine kurze Anleitung zur Einrichtung eigener Videokonferenzen. Diese eignen sich nicht nur für den Distanzunterricht, sondern sind auch
+                    praktisch um von einem Endgerät Inhalte an die Tafeln zu übertragen.
+                </p>
+                <a href="pdfs/Kurzanleitung - IServ Videokonferenzen einrichten.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+            
+             <!-- IServ - Distanzunterricht - Videokonferenzen einrichten und Aufgaben erstellen -->
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="IServ Videokonferenz VK einrichten erstellen erzeugen Distanz Unterricht Aufgaben Modul"
+                 data-type="html">
+                 <h3>Videokonferenzen und Aufgabenmodul im Distanzunterricht einsetzen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Videokonferenz</span>
+                    <span class="badge badge-type-html">Aufgabenmodul</span>
+                </div>
+                <p class="help-item-description">
+                    Eine kurze Anleitung für den Distanzunterricht - Videokonferenzen einrichten und Aufgabenmodul
+                </p>
+                <a href="pdfs/Kurzanleitung - IServ Videokonferenzen und Aufgaben.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+ <!-- IServ - Videokonferenzteilnahme -->
+            <div class="help-item" 
+                 data-category="IServ" 
+                 data-keywords="IServ Videokonferenz VK Teilnahme beitreten"
+                 data-type="html">
+                 <h3>Teilnahme an Videokonferenzen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">IServ</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Videokonferenz</span>
+                </div>
+                <p class="help-item-description">
+                    Eine kurze Anleitung für die Teilnahme an einer Videokonferenz
+                </p>
+                <a href="pdfs/Kurzanleitung - Teilnahme an Videokonferenzen.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+            
+             <!-- iPad - Speicherbereinigung -->
+            <div class="help-item" 
+                 data-category="iPad" 
+                 data-keywords="iPad Speicher Update Problem"
+                 data-type="html">
+                 <h3>iPad Speicherbereinigung für Updates</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">iPad</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Updates</span>
+                </div>
+                <p class="help-item-description">
+                    Eine kurze Anleitung zur Freigabe von Speicher im iPad, in der Hoffnung ein Update doch noch durchführen zu können. 
+                    Leider werden die Upadtes immer größer, der iPad Speicher ist aber sehr begrenzt. Selbst ein komplett geleertes iPad bekommt kaum
+                    noch das Update installiert - Apples Verkaufsstrategie für Cloud-Abos...
+                </p>
+                <a href="pdfs/FB_Digi_iPad_Speicherbereinigung.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+            
+             <!-- iPad - Edupool mit Safari nutzen -->
+            <div class="help-item" 
+                 data-category="iPad" 
+                 data-category="EduPool" 
+                 data-keywords="iPad Edupool Problem"
+                 data-type="html">
+                 <h3>Edupool auf dem iPad nutzen</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">iPad</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">EduPool</span>
+                </div>
+                <p class="help-item-description">
+                    Eine kurze Anleitung zur Nutzung von Edupool auf dem iPad. Edupool wird auf dem iPad beim Start aus IServ nicht ausgeführt, da es 
+                    durch Safari blockiert wird. Diese Anleitung zeigt die Einstellung für Safari, damit Edupool ordnungsgemäß startet.
+                </p>
+                <a href="pdfs/FB Digi_Edupool mit iPad und Board.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+
+
+
+ <!-- iPad - Microsoft -->
+            <div class="help-item" 
+                 data-category="iPad" 
+                 data-category="Lizenzen" 
+                 data-keywords="ipad Microsoft Lizenzen Office"
+                 data-type="html">
+                 <h3>Microsoft Office Lizenzen verfügbar</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">iPad</span>
+                    <span class="badge badge-type-html">Apps</span>
+                     <span class="badge badge-type-pdf">Microsoft Office</span>
+                    <span class="badge badge-type-html">Lizenzen</span>
+                </div>
+                <p class="help-item-description">
+                    Microsoft Office ist als App und als PC Version durch die IT des Heidekreises verfügbar. Es ist lediglich eine Registrierung nötig, 
+                    um eine Lizenz zugewiesen zu bekommen.
+                </p>
+                <a href="https://kgsschwarmstedt.de/iserv/know/entry/show/23" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+
+
+<!-- Lizenzen -->
+            <div class="help-item" 
+                 data-category="Software" 
+                 data-category="Lizenzen" 
+                 data-keywords="ipad Microsoft Lizenzen Office AbiBox Schulbuchverlag Unterrichtsassisten"
+                 data-type="html">
+                 <h3>Lizenzen für Lehrer</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">iPad</span>
+                    <span class="badge badge-type-html">Apps</span>
+                     <span class="badge badge-type-pdf">Unterrichtsassistenten</span>
+                    <span class="badge badge-type-html">Lizenzen</span>
+                </div>
+                <p class="help-item-description">
+                    Hier entsteht eine Übersicht über vorhandene Lizenzen mit dem jeweiligen Ansprechpartner.
+                </p>
+               <!-- <a href="https://kgsschwarmstedt.de/iserv/know/entry/show/23" class="help-item-link" target="_blank">
+                    Anleitung lesen → -->
+                </a>
+            </div>
+
+
+
+
+<!-- Datenbereich für LEB -->
+<!-- LEB - AV SV -->
+            <div class="help-item" 
+                 data-category="LEB" 
+                 data-category="Klassenlehrer" 
+                 data-keywords="LEB Arbeitsverhalten Sozialverhalten Arbeits Sozial Klassenlehrer AV SV"
+                 data-type="html">
+                 <h3>LEB - Arbeits- und Sozialverhalten eingeben</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">LEB</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Klassenlehrer</span>
+                    <span class="badge badge-type-html">AV SV</span>
+                </div>
+                <p class="help-item-description">
+                    LEB - AV SV Eingabe
+                </p>
+                <a href="pdfs/LEB/FB_Digi_LEB_AV-SV-Vorschlag eingeben.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+<!-- LEB - Erste Schritt -->
+            <div class="help-item" 
+                 data-category="LEB" 
+                 data-category="Klassenlehrer" 
+                 data-keywords="LEB Erste Schritte"
+                 data-type="html">
+                 <h3>LEB - Erste Schritte</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">LEB</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Klassenlehrer</span>
+                    <span class="badge badge-type-html">AV SV</span>
+                </div>
+                <p class="help-item-description">
+                    LEB - Erste Schritte beim Start mit LEB
+                </p>
+                <a href="pdfs/LEB/FB_Digi_LEB_erste Schritte.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+            
+<!-- LEB - Klassenlehrereingaben -->
+            <div class="help-item" 
+                 data-category="LEB" 
+                 data-category="Klassenlehrer" 
+                 data-keywords="LEB Klassenlehrer Eingaben Konferenzen Zeugnis Vorbereitung"
+                 data-type="html">
+                 <h3>LEB - Vorbereitung der Zeugniskonferenzen für Klassenlehrkräfte</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">LEB</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Klassenlehrer</span>
+                    <span class="badge badge-type-html">Zeugnisse</span>
+                </div>
+                <p class="help-item-description">
+                    LEB - Klassenlehrereingaben: Dieses PDF dient als Anleitung für Klassenlehrkräfte zur Nutzung des Systems für Bewertungen, 
+                    Fehltage und Zeugnisse. Es beschreibt den Zugriff auf Klassen- und Schülerdaten, Mehrfachbewertungen, Import von Fehltagen
+                     aus WebUntis sowie Generierung von Berichten wie Zeugnisausgaben, Konferenzübersichten und Leistungslisten als PDF oder Excel. 
+                     Eine umfangreiche Liste von Textbausteinen für Bemerkungen zu Versetzungen, Förderungen, Berufsorientierung und 
+                     Verhaltensnoten wird in LEB bereitgestellt.
+                   
+                </p>
+                <a href="pdfs/LEB/FB_Digi_LEB_Klassenlehrereingaben.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+<!-- LEB - Zeugnisprüfung -->
+            <div class="help-item" 
+                 data-category="LEB" 
+                 data-category="Klassenlehrer" 
+                 data-keywords="LEB Klassenlehrer Eingaben Konferenzen Zeugnis Vorbereitung Kontrolle"
+                 data-type="html">
+                 <h3>LEB - Zeugnisprüfung</h3>
+                <div class="help-item-meta">
+                    <span class="badge badge-category">LEB</span>
+                    <span class="badge badge-type-html">Anleitung</span>
+                     <span class="badge badge-type-pdf">PDF</span>
+                    <span class="badge badge-type-html">Klassenlehrer</span>
+                    <span class="badge badge-type-html">Zeugnisse</span>
+                </div>
+                <p class="help-item-description">
+                    Dieses PDF ist ein Kontrollbogen für die Zeugnisüberprüfung, der wesentliche Punkte in sechs Kategorien auflistet: 
+                    Allgemeine Angaben (z.B. Name, Geburtsdaten, Klasse), Noten und Fächer (z.B. Vollständigkeit, Konsistenz, epochale Fächer). 
+                    Es umfasst Verhaltens- und Sozialbeurteilungen (stimmige Begründungen), zusätzliche Informationen (z.B. Förderunterricht, 
+                    BO-Maßnahmen, Versetzungshinweise). Weitere Prüfpunkte betreffen Rechtschreibung/Formalitäten (keine Fehler oder Lücken) 
+                    und Abschluss (vollständige Prüfung durch Klassenlehrer).
+                </p>
+                <a href="pdfs/LEB/FB_Digi_LEB_Zeugnisprüfung_Kontrollpunkte.pdf" class="help-item-link" target="_blank">
+                    Anleitung lesen →
+                </a>
+            </div>
+
+
+
+
+        </div>
+
+        <!-- Keine Ergebnisse Meldung -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3>Keine Ergebnisse gefunden</h3>
+            <p>Versuchen Sie einen anderen Suchbegriff oder wählen Sie eine andere Kategorie.</p>
+        </div>
+    </div>
+
+    <script>
+        // ====================================
+        // LIVE-SUCHFILTER & KATEGORIE-FILTER
+        // ====================================
+        
+        const searchInput = document.getElementById('searchInput');
+        const helpItems = document.querySelectorAll('.help-item');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const noResults = document.getElementById('noResults');
+        
+        let activeCategory = 'all';
+
+        // Suchfunktion
+        searchInput.addEventListener('input', function() {
+            filterItems();
+        });
+
+        // Kategorie-Filter
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Aktiven Button markieren
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Kategorie speichern
+                activeCategory = this.dataset.category;
+                
+                // Filtern
+                filterItems();
+            });
+        });
+
+        // Haupt-Filterfunktion
+        function filterItems() {
+            const searchTerm = searchInput.value.toLowerCase();
+            let visibleCount = 0;
+
+            helpItems.forEach(item => {
+                const keywords = item.dataset.keywords.toLowerCase();
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const category = item.dataset.category;
+                
+                // Prüfen ob Kategorie passt
+                const categoryMatch = activeCategory === 'all' || category === activeCategory;
+                
+                // Prüfen ob Suchbegriff passt
+                const searchMatch = searchTerm === '' || 
+                                   keywords.includes(searchTerm) || 
+                                   title.includes(searchTerm);
+                
+                // Anzeigen oder verstecken
+                if (categoryMatch && searchMatch) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // "Keine Ergebnisse" Meldung
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // Klick auf Hilfe-Eintrag öffnet Link
+        helpItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Nur wenn nicht direkt auf Link geklickt wurde
+                if (e.target.tagName !== 'A') {
+                    const link = this.dataset.link;
+                    window.open(link, '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
