@@ -10,145 +10,138 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
-            min-height:100vh;
+            min-height: 100vh;
             padding: 40px 20px 180px;
-            color:#1f2937;
+            color: #1f2937;
         }
 
         .container {
-            max-width:960px;
-            margin:0 auto;
+            max-width: 960px;
+            margin: 0 auto;
         }
 
         .header {
-            background:rgba(255,255,255,0.95);
-            backdrop-filter:blur(12px);
-            border:1px solid rgba(255,255,255,0.35);
-            border-radius:16px;
-            padding:28px 32px;
-            box-shadow:0 12px 40px rgba(0,0,0,0.18);
-            margin-bottom:40px;
-            text-align:center;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 16px;
+            padding: 28px 32px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            margin-bottom: 40px;
+            text-align: center;
         }
 
         .header h1 {
-            color:#003F7F;
-            font-size:2.1rem;
-            margin-bottom:8px;
+            color: #003F7F;
+            font-size: 2.1rem;
+            margin-bottom: 8px;
         }
 
         .header-subtitle {
-            color:#4b5563;
-            font-size:1rem;
-            line-height:1.5;
+            color: #4b5563;
+            font-size: 1rem;
+            line-height: 1.5;
         }
 
         .content-card {
-            background:rgba(255,255,255,0.96);
-            backdrop-filter:blur(10px);
-            border:1px solid rgba(220,220,230,0.4);
-            border-radius:14px;
-            padding:32px;
-            box-shadow:0 6px 24px rgba(0,0,0,0.12);
-            margin-bottom:40px;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(220,220,230,0.4);
+            border-radius: 14px;
+            padding: 32px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+            margin-bottom: 40px;
         }
 
         .content-card h2 {
-            color:#003F7F;
-            font-size:1.5rem;
-            margin-bottom:1.5rem;
-            text-align:center;
+            color: #003F7F;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .content-card ol {
-            font-size:1.05rem;
-            line-height:1.7;
-            padding-left:2.2rem;
-            counter-reset:step;
-            margin-bottom:1.5rem;
+            counter-reset: step;
+            list-style: none;
+            padding-left: 2.4rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
-        .content-card ol > li {
-            margin-bottom:1.2rem;
-            position:relative;
+        .content-card ol li {
+            position: relative;
+            margin-bottom: 1.2rem;
         }
 
-        .content-card ol > li::before {
-            counter-increment:step;
-            content:counter(step) ".";
-            color:#003F7F;
-            font-weight:bold;
-            position:absolute;
-            left:-2.2rem;
-            top:0;
+        .content-card ol li::before {
+            counter-increment: step;
+            content: counter(step) ".";
+            position: absolute;
+            left: -2.4rem;
+            color: #003F7F;
+            font-weight: bold;
         }
 
         .leb-categories {
-            list-style:none;
-            padding:0;
-            margin:1.25rem 0 1.75rem;
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-            gap:0.9rem;
+            list-style: none;
+            padding: 0;
+            margin: 1.25rem 0 1.75rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.9rem;
         }
 
         .leb-categories li {
-            background:#eff6ff;
-            border:1px solid #bfdbfe;
-            border-radius:8px;
-            padding:0.9rem 1.1rem;
-            text-align:center;
-            font-size:0.98rem;
-            color:#1e40af;
-            font-weight:500;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 0.9rem 1.1rem;
+            text-align: center;
+            font-size: 0.98rem;
+            color: #1e40af;
+            font-weight: 500;
         }
 
         .big-action {
-            position:fixed;
-            bottom:calc(env(safe-area-inset-bottom) + 20px);
-            left:50%;
-            transform:translateX(-50%);
-            z-index:1000;
-
-            min-width:320px;
-            max-width:90%;
-            padding:16px 32px;
-
-            background:linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
-            color:white;
-            font-size:1.15rem;
-            font-weight:600;
-            text-decoration:none;
-            border-radius:12px;
-            box-shadow:0 10px 30px rgba(0,63,127,0.45);
-
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            gap:10px;
-
-            transition:all 0.25s ease;
+            position: fixed;
+            bottom: calc(env(safe-area-inset-bottom) + 20px);
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            min-width: 320px;
+            max-width: 90%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,63,127,0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
         }
 
         .big-action:hover {
-            transform:translateX(-50%) translateY(-4px);
-            box-shadow:0 16px 40px rgba(0,63,127,0.6);
+            transform: translateX(-50%) translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,63,127,0.6);
         }
-
-        .big-action svg { width:24px; height:24px; }
 
         .hint {
-            text-align:center;
-            color:#e5e7eb;
-            font-size:0.95rem;
-            margin-top:1rem;
-            opacity:0.9;
+            text-align: center;
+            color: #e5e7eb;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            opacity: 0.9;
         }
 
-        @media (max-width:640px) {
-            body { padding:32px 16px 200px; }
-            .big-action { padding:14px 24px; font-size:1.05rem; min-width:unset; }
-            .leb-categories { grid-template-columns:1fr; }
+        @media (max-width: 640px) {
+            body { padding: 32px 16px 200px; }
+            .big-action { padding: 14px 24px; font-size: 1.05rem; min-width: unset; }
+            .leb-categories { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -195,7 +188,7 @@
 </div>
 
 <a href="https://kgsschwarmstedt.de/iserv/report/add/" target="_blank" class="big-action">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" width="24" height="24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
     </svg>
     Jetzt LEB-Änderung melden
