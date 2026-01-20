@@ -5,126 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LEB – Änderung melden | KGS Digital</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
-            min-height: 100vh;
-            padding: 32px 16px;
-            color: #1f2937;
-        }
+    background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
+    min-height: 100vh;
+    padding: 40px 20px;                /* mehr Luft oben → Gradient wird sofort sichtbar */
+    margin: 0;
+}
 
-        .container {
-            max-width: 1100px;                  /* etwas schmaler → mehr seitlicher Rand */
-            margin: 0 auto;
-        }
+.container {
+    max-width: 1000px;                 /* enger → mehr blauer Rand links/rechts */
+    margin: 0 auto;
+    background: transparent;           /* wichtig: kein Weiß über den Body legen */
+}
 
-        /* ────────────────────────────────────────────────
-           Header – fast 1:1 Kopie aus index.html
-        ──────────────────────────────────────────────── */
-        .header {
-            background: white;
-            padding: 24px 32px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 40px;
-        }
+/* Header etwas leichter / schwebender machen */
+.header {
+    background: rgba(255, 255, 255, 0.96);   /* leicht durchsichtig → Gradient schimmert durch */
+    backdrop-filter: blur(12px);             /* Frosted-Glass-Look – sehr nah an modernen Designs */
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+}
 
-        .header-top h1 {
-            color: #003F7F;
-            font-size: 28px;
-            margin-bottom: 6px;
-        }
-
-        .header-subtitle {
-            color: #6b7280;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-
-        /* ────────────────────────────────────────────────
-           Content-Bereich – mittig, weiße Karte, wie help-item
-        ──────────────────────────────────────────────── */
-        .content-card {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-            border-left: 5px solid #003F7F;
-            margin-bottom: 32px;
-        }
-
-        .content-card h2 {
-            color: #003F7F;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .content-card ol {
-            padding-left: 28px;
-            font-size: 15.5px;
-            line-height: 1.75;
-            color: #374151;
-        }
-
-        .content-card li {
-            margin-bottom: 14px;
-        }
-
-        .content-card ul {
-            margin: 12px 0 16px 28px;
-            list-style-type: disc;
-            color: #4b5563;
-        }
-
-        /* Großer Button – Stil wie .external-link aus index */
-        .big-action {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 520px;
-            margin: 48px auto 24px;
-            padding: 16px 36px;
-            background: linear-gradient(135deg, #003F7F 0%, #005CAD 100%);
-            color: white;
-            font-size: 1.15rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 10px;
-            box-shadow: 0 6px 16px rgba(0, 63, 127, 0.32);
-            transition: all 0.28s ease;
-        }
-
-        .big-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(0, 63, 127, 0.42);
-        }
-
-        .big-action svg {
-            width: 22px;
-            height: 22px;
-        }
-
-        .hint {
-            text-align: center;
-            color: #d1d5db;
-            font-size: 0.94rem;
-            margin-top: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .container { max-width: 100%; padding: 0 12px; }
-            .header { padding: 20px 24px; }
-            .content-card { padding: 24px; }
-            .big-action { font-size: 1.05rem; padding: 14px 28px; }
-        }
+/* Content-Karte ebenfalls angepasst */
+.content-card {
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(220,220,230,0.5);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
     </style>
 </head>
 <body>
